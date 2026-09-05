@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auren — The last-mile guardrail for AI agents</title>
+  <meta name="description" content="Auren is a local desktop app that protects your whole computer from AI-agent overreach. One biometric-gated switch blocks websites, apps, terminal network access, and autofill. macOS and Windows. Public beta.">
+  <meta property="og:title" content="Auren — The last-mile guardrail for AI agents">
+  <meta property="og:description" content="One switch. Your computer, protected from AI-agent overreach. Local-only, biometric-gated, fail-closed.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070b10'/%3E%3Cpath d='M16 5l9 4v6c0 5.5-3.8 9.4-9 12-5.2-2.6-9-6.5-9-12V9l9-4z' fill='none' stroke='%232ee5a0' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M12.5 16l2.5 2.5 4.5-5' fill='none' stroke='%232ee5a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" id="top">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Auren home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0b141c"/><path d="M16 5l9 4v6c0 5.5-3.8 9.4-9 12-5.2-2.6-9-6.5-9-12V9l9-4z" fill="none" stroke="#2ee5a0" stroke-width="2" stroke-linejoin="round"/><path d="M12.5 16l2.5 2.5 4.5-5" fill="none" stroke="#2ee5a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="brand-name">Auren</span>
+        <span class="beta-pill">Public Beta</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#how">How it works</a>
+        <a href="#switch">Protection Mode</a>
+        <a href="#files">File Guard</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn btn-small btn-ghost" href="#download">Download</a>
+        <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+      <a href="#how">How it works</a>
+      <a href="#switch">Protection Mode</a>
+      <a href="#files">File Guard</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">FAQ</a>
+      <a href="#download" class="btn btn-primary btn-small">Download</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="dot"></span> Public Beta · v0.4.0 · macOS &amp; Windows</p>
+          <h1>The last-mile guardrail for <em>AI agents</em>.</h1>
+          <p class="lede">AI agents run on <strong>your</strong> machine now — reading your browser, opening your terminal, running commands. Auren is the endpoint layer that keeps them working while making sure they can&rsquo;t reach the sites, apps, and data you didn&rsquo;t give them.</p>
+          <div class="hero-actions" id="download">
+            <a class="btn btn-primary btn-os" data-os="mac" href="https://github.com/yuvaang13/Auren-Guardrail-for-AI-agents/releases" data-dl="mac">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 12.54c-.03-2.9 2.37-4.29 2.48-4.36-1.35-1.98-3.46-2.25-4.21-2.28-1.79-.18-3.5 1.06-4.4 1.06-.91 0-2.31-1.03-3.8-1-1.95.03-3.75 1.14-4.76 2.88-2.03 3.52-.52 8.74 1.46 11.6.96 1.39 2.11 2.95 3.62 2.89 1.45-.06 2-.94 3.75-.94s2.25.94 3.79.91c1.56-.03 2.55-1.41 3.51-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.02-4.7zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.86-1.39 2.23-1.22 3.55 1.29.1 2.6-.65 3.41-1.63z"/></svg>
+              <span><strong>Download for Mac</strong><small>Apple Silicon &amp; Intel · .dmg</small></span>
+            </a>
+            <a class="btn btn-secondary btn-os" data-os="win" href="https://github.com/yuvaang13/Auren-Guardrail-for-AI-agents/releases" data-dl="win">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5.55v7.4h7.34v-7.4H3zm8.34 0v7.4H21v-7.4h-9.66zM3 13.95v7.4h7.34v-7.4H3zm8.34 0v7.4H21v-7.4h-9.66z"/></svg>
+              <span><strong>Download for Windows</strong><small>Windows 10/11 · installer</small></span>
+            </a>
+          </div>
+          <p class="fineprint">Free during beta · Unsigned builds — <a href="#faq-unsigned">2-click Gatekeeper / SmartScreen step</a> included.</p>
+          <ul class="trust-row" aria-label="Key properties">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v5c0 4.5-3 7.7-7 10-4-2.3-7-5.5-7-10V6l7-3z"/></svg> Local-only</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M7 10V7a5 5 0 0110 0v3M6 10h12v10H6z"/></svg> Biometric-gated</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg> Fail-closed</li>
+          </ul>
+        </div>
+        <div class="hero-visual" aria-label="Auren app preview">
+          <div class="app-window">
+            <div class="app-titlebar" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="app-body">
+              <div class="app-row app-row-top">
+                <div>
+                  <p class="app-label">Protection Mode</p>
+                  <p class="app-status"><span class="status-dot"></span> ON — everything unreachable except what you allow</p>
+                </div>
+                <div class="toggle on" aria-hidden="true"><span></span></div>
+              </div>
+              <div class="app-block">
+                <p class="app-label">Blocked sites</p>
+                <ul class="chip-list">
+                  <li>bank.com</li><li>mail.google.com</li><li>docs.google.com</li><li class="more">+2</li>
+                </ul>
+              </div>
+              <div class="app-block">
+                <p class="app-label">Blocked apps</p>
+                <ul class="chip-list">
+                  <li>Discord</li><li>Messages</li>
+                </ul>
+              </div>
+              <div class="app-block">
+                <p class="app-label">File System Guard</p>
+                <p class="mount-line"><span class="folder"></span> learningPython <span class="mount-tag">only mount</span></p>
+              </div>
+              <p class="app-log">Agent command blocked <span>(cmd_ssh)</span> · file outside mounts denied <span>(fs_denied)</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LAYERS ============ -->
+    <section class="section" id="how">
+      <div class="wrap">
+        <p class="eyebrow">How it works</p>
+        <h2>Enforcement lives <em>below</em> the browser.</h2>
+        <p class="section-lede">Prompt guardrails argue with the model. Auren sits at the OS layer, where agents actually act — so a DNS <code>NXDOMAIN</code>, a killed process, and a fingerprint gate don&rsquo;t negotiate.</p>
+        <div class="card-grid">
+          <article class="card reveal">
+            <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M3 12h18M12 3c2.5 2.6 3.9 5.7 3.9 9S14.5 18.4 12 21c-2.5-2.6-3.9-5.7-3.9-9S9.5 5.6 12 3z"/></svg></div>
+            <h3>DNS blocking</h3>
+            <p>Protection ON points system DNS at Auren&rsquo;s local resolver. Blocked domains answer <code>NXDOMAIN</code> in <strong>every</strong> app and browser — including headless ones agents open themselves.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 4h16v12H4zM8 20h8M12 16v4"/></svg></div>
+            <h3>OS firewall</h3>
+            <p>Command ports, known DoH/DoT endpoints, and cloud-metadata IPs are blocked at the OS — <code>pf</code> anchor on macOS, firewall rules on Windows. Tunnels and &ldquo;Secure DNS&rdquo; bypasses fail.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M9 7V5a3 3 0 016 0v2"/></svg></div>
+            <h3>App blocking</h3>
+            <p>Blocked apps are killed the moment they start — and kept stopped — system-wide, no matter which process launched them. Exact-path matching, never substrings.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M6 11V8a6 6 0 0112 0v3M5 11h14v9H5zM12 15v2"/></svg></div>
+            <h3>Autofill &amp; HTTPS hostnames</h3>
+            <p>Saved passwords, addresses, and cards can&rsquo;t be auto-filled while protected. A loopback SNI proxy refuses blocked HTTPS hosts by name — without decrypting anything, ever.</p>
+          </article>
+        </div>
+        <div class="diagram reveal" aria-label="Request flow diagram">
+          <span class="flow-node">AI agent</span><span class="flow-arrow" aria-hidden="true">→</span>
+          <span class="flow-node">any browser / app / terminal</span><span class="flow-arrow" aria-hidden="true">→</span>
+          <span class="flow-node flow-node-core">Auren resolver <small>127.0.0.1</small></span>
+          <div class="flow-out">
+            <span class="flow-outcome deny">blocked → NXDOMAIN</span>
+            <span class="flow-outcome allow">everything else → real DNS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SWITCH ============ -->
+    <section class="section section-alt" id="switch">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Protection Mode</p>
+          <h2>One switch. Your fingerprint holds the key.</h2>
+          <p class="section-lede">Turning protection <strong>on</strong> is instant. Turning it <strong>off</strong> — or quitting the app — requires Touch&nbsp;ID / Windows&nbsp;Hello or your device passcode, plus a 5-second cooldown where everything stays blocked. An agent can&rsquo;t quietly undo it.</p>
+          <ol class="steps">
+            <li><strong>Flip it on.</strong> First run installs the background service (one admin prompt); every later flip is instant.</li>
+            <li><strong>Work normally.</strong> Allowed sites, apps, and files behave exactly as before.</li>
+            <li><strong>Agents hit the wall.</strong> Blocked lookups fail, tunnels die, exfil pipelines get denied before they run.</li>
+          </ol>
+        </div>
+        <div class="panel reveal">
+          <h3>Auto-protect <span class="beta-pill">Beta</span></h3>
+          <p>Auren watches for live agent sessions — headless browsers, Playwright / Puppeteer / Selenium drivers, CLI agents, Cursor &amp; co. — and raises protection itself when it spots one while you&rsquo;re unprotected. Detection needs a persistent, confident match, so stray words never trip it. It only ever raises protection; lowering it is always your fingerprint.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FILE GUARD ============ -->
+    <section class="section" id="files">
+      <div class="wrap">
+        <p class="eyebrow">File System Guard</p>
+        <h2>Agents see exactly one folder. <em>Yours.</em></h2>
+        <p class="section-lede">Mount a workspace like <code>learningPython</code> and every agent file request routed through Auren is checked: canonicalized (symlinks and <code>../</code> collapsed), screened against forced exclusions, then contained to your mounts. Anything else is refused <em>before the read happens</em>.</p>
+        <div class="card-grid three">
+          <article class="card reveal"><h3>Default-deny mounts</h3><p>The agent starts with zero file access. Only folders you explicitly mount are visible through Auren&rsquo;s gates — stored encrypted, locally.</p></article>
+          <article class="card reveal"><h3>Forced exclusions</h3><p><code>.env</code>, <code>.ssh</code>, <code>.aws</code>, <code>*.pem / *.key</code>, browser credential stores — always denied, even inside a mount. Never removable.</p></article>
+          <article class="card reveal"><h3>Traversal-proof</h3><p>Symlink escapes and <code>workspace/../.env</code> tricks collapse to their real location first — then get denied.</p></article>
+        </div>
+        <p class="scope-note reveal"><strong>Honest scope:</strong> the guard covers agent file access routed through Auren (loopback bridge, terminal-command gate, path checks). It doesn&rsquo;t lock Finder / File Explorer for you — you stay trusted; the agent stays leashed.</p>
+      </div>
+    </section>
+
+    <!-- ============ PRIVACY ============ -->
+    <section class="section section-alt" id="privacy">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Privacy</p>
+          <h2>Zero-knowledge. <em>Local-only.</em></h2>
+          <p class="section-lede">No blocklists, mounts, paths, or activity data are ever collected or transmitted. No telemetry, no account, no cloud. Your policy lives in your OS app-data directory, encrypted at rest (AES-256-GCM) and signed (HMAC) — and the daemon verifies it on every poll.</p>
+        </div>
+        <ul class="ticks reveal">
+          <li>No file contents or full paths ever logged — basenames and labels only</li>
+          <li>Biometrics never touch Auren — only pass/fail from Touch ID / Hello</li>
+          <li>Fail-closed: if enforcement can&rsquo;t be verified, gates refuse by default</li>
+          <li>Activity log is append-only, on your disk, readable by you</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ LIMITS ============ -->
+    <section class="section" id="limits">
+      <div class="wrap narrow">
+        <p class="eyebrow">Honest limits</p>
+        <h2>What Auren does <em>not</em> claim.</h2>
+        <ul class="limits">
+          <li>Not a Finder/Explorer lock — it leashes agents, not you.</li>
+          <li>Not a sandbox — unlisted processes run freely; app blocking is an exact-path kill-loop.</li>
+          <li>Not content inspection — the HTTPS proxy reads hostnames only, never payloads.</li>
+          <li>DoH blocking covers known endpoints; a self-hosted resolver isn&rsquo;t on the list.</li>
+          <li>Assumes a non-compromised machine — root-level attackers are out of scope.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section section-alt" id="faq">
+      <div class="wrap narrow">
+        <p class="eyebrow">FAQ</p>
+        <h2>Questions, answered.</h2>
+        <div class="faq">
+          <details class="reveal" id="faq-unsigned">
+            <summary>How do I install the unsigned beta builds?</summary>
+            <p><strong>Mac:</strong> open the .dmg, drag Auren to Applications, then right-click → Open on first launch to bypass Gatekeeper once. <strong>Windows:</strong> run the installer, then SmartScreen → “More info” → “Run anyway”. Signed builds are on the roadmap.</p>
+          </details>
+          <details class="reveal">
+            <summary>Which platforms are supported?</summary>
+            <p>macOS (Apple Silicon and Intel) and Windows 10/11. Protection uses the <code>pf</code> anchor on macOS and firewall rules on Windows; DNS, proxy, autofill, and agent gates work on both.</p>
+          </details>
+          <details class="reveal">
+            <summary>Will it break my normal browsing?</summary>
+            <p>No. Allowed sites resolve and load exactly as before. Only domains, apps, and ports you block are affected — and flipping protection OFF restores everything within about a second.</p>
+          </details>
+          <details class="reveal">
+            <summary>Does the File Guard lock my own folders?</summary>
+            <p>No — you can always open anything in Finder/Explorer. The guard constrains what AI agents can read through Auren, so secrets outside your mounted workspace stay out of agent reach.</p>
+          </details>
+          <details class="reveal">
+            <summary>What happens if something goes wrong?</summary>
+            <p>Auren fails closed: if the background service stops responding or its integrity can&rsquo;t be verified, every gated surface refuses by default and the app shows a degraded banner with a one-click service reinstall.</p>
+          </details>
+          <details class="reveal">
+            <summary>Is there a price / subscription?</summary>
+            <p>The beta is free. A subscription with synced policies across machines and a cloud dashboard is planned — your local-only posture stays the default.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta">
+      <div class="wrap cta-inner reveal">
+        <h2>Put a guardrail between agents and your computer.</h2>
+        <p>Free during the public beta. One switch. Thirty seconds to protected.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/yuvaang13/Auren-Guardrail-for-AI-agents/releases" data-dl="mac">Download for Mac</a>
+          <a class="btn btn-secondary" href="https://github.com/yuvaang13/Auren-Guardrail-for-AI-agents/releases" data-dl="win">Download for Windows</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div class="brand">
+        <span class="brand-name">Auren</span>
+        <span class="beta-pill">Public Beta · v0.4.0</span>
+      </div>
+      <nav aria-label="Footer">
+        <a href="#how">How it works</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/yuvaang13/Auren-Guardrail-for-AI-agents/releases">Releases</a>
+      </nav>
+      <p class="copyright">© <span id="year">2026</span> Auren. Local-first security for the agent era.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
