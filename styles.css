@@ -222,6 +222,54 @@ code {
 .flow-outcome.deny { color: #ffb4b4; background: rgba(255, 96, 96, 0.1); border: 1px solid rgba(255, 96, 96, 0.3); }
 .flow-outcome.allow { color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(46, 229, 160, 0.3); }
 
+/* ---------- playground ---------- */
+.play-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 40px; }
+.play-card {
+  position: relative;
+  background: linear-gradient(170deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02) 55%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.11); border-radius: var(--radius);
+  padding: 0; overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.play-head { display: flex; align-items: center; gap: 7px; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.play-dot { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,0.16); flex: none; }
+.play-dot.r { background: rgba(255, 95, 86, 0.75); }
+.play-dot.y { background: rgba(255, 189, 46, 0.75); }
+.play-dot.g { background: rgba(39, 201, 63, 0.75); }
+.play-title { margin-left: 8px; font-family: var(--mono); font-size: 0.78rem; color: var(--faint); }
+.play-chips { display: flex; gap: 8px; flex-wrap: wrap; padding: 16px 20px 0; }
+.play-chips button {
+  font-family: var(--mono); font-size: 0.76rem; color: var(--muted);
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px; padding: 6px 12px; cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.play-chips button:hover { color: var(--accent); border-color: rgba(46, 229, 160, 0.4); }
+.play-form { display: flex; align-items: center; gap: 10px; padding: 14px 20px 6px; }
+.play-form .prompt { font-family: var(--mono); color: var(--accent); font-weight: 700; flex: none; }
+.play-form input {
+  flex: 1; min-width: 0; font-family: var(--mono); font-size: 0.88rem; color: var(--text);
+  background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 11px 13px;
+}
+.play-form input:focus { outline: none; border-color: rgba(46, 229, 160, 0.5); }
+.verdict { min-height: 3.2em; margin: 10px 20px 20px; padding: 12px 14px; border-radius: 12px; font-family: var(--mono); font-size: 0.82rem; line-height: 1.5; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.07); color: var(--muted); }
+.verdict:empty { display: none; }
+.verdict.allow { border-color: rgba(46, 229, 160, 0.4); color: var(--accent); }
+.verdict.deny { border-color: rgba(255, 96, 96, 0.4); color: #ffb4b4; }
+.verdict .tag { display: inline-block; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.08em; padding: 2px 9px; border-radius: 999px; margin-right: 8px; }
+.verdict.allow .tag { background: var(--accent-dim); border: 1px solid rgba(46,229,160,0.4); }
+.verdict.deny .tag { background: rgba(255, 96, 96, 0.1); border: 1px solid rgba(255,96,96,0.4); }
+
+/* hero demo toggle is a real button */
+button.toggle { border: 0; cursor: pointer; padding: 0; }
+button.toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.toggle:not(.on) { background: rgba(255,255,255,0.14); }
+.toggle:not(.on) span { right: auto; left: 3px; }
+.app-status.off .status-dot { background: var(--faint); box-shadow: none; }
+.app-hint { margin: 0; font-size: 0.78rem; color: var(--faint); }
+
 /* ---------- split / steps / panel ---------- */
 .split { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: start; }
 .steps { list-style: none; counter-reset: step; margin: 26px 0 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
@@ -294,7 +342,7 @@ code {
 
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
-  .hero-grid, .split { grid-template-columns: 1fr; gap: 44px; }
+  .hero-grid, .split, .play-grid { grid-template-columns: 1fr; gap: 44px; }
   .card-grid, .card-grid.three { grid-template-columns: repeat(2, 1fr); }
   .nav-links { display: none; }
   .nav-burger { display: flex; }
