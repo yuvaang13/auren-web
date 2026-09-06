@@ -39,6 +39,40 @@
     revealEls.forEach(function (el) { el.classList.add("visible"); });
   }
 
+  // Scroll progress bar (rAF-throttled)
+  var progress = document.getElementById("scrollProgress");
+  if (progress) {
+    var ticking = false;
+    var update = function () {
+      ticking = false;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      progress.style.transform = "scaleX(" + ratio.toFixed(4) + ")";
+    };
+    window.addEventListener("scroll", function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  }
+
+  // Scrollspy: highlight the nav link for the section in view
+  var spyLinks = document.querySelectorAll(".nav-links a[href^='#']");
+  var spySections = [];
+  spyLinks.forEach(function (a) {
+    var el = document.querySelector(a.getAttribute("href"));
+    if (el) spySections.push({ link: a, el: el });
+  });
+  if ("IntersectionObserver" in window && spySections.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        spySections.forEach(function (s) {
+          s.link.classList.toggle("active", s.el === e.target);
+        });
+      });
+    }, { rootMargin: "-40% 0px -55% 0px" });
+    spySections.forEach(function (s) { spy.observe(s.el); });
+  }
   // Highlight the download button matching the visitor's OS.
   // Links still work for both — this only adds a visual recommendation.
   try {

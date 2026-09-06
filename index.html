@@ -8,6 +8,7 @@
   <meta property="og:title" content="Auren — The last-mile guardrail for AI agents">
   <meta property="og:description" content="One switch. Your computer, protected from AI-agent overreach. Local-only, biometric-gated, fail-closed.">
   <meta property="og:type" content="website">
+  <meta name="theme-color" content="#070b10">
   <link rel="icon" href="logo.png?v=2" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,11 +17,12 @@
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <header class="nav" id="top">
     <div class="wrap nav-inner">
       <a class="brand" href="#top" aria-label="Auren home">
-        <img class="brand-mark" src="logo.png?v=2" alt="" width="28" height="28">
+        <img class="brand-mark" src="logo.png?v=2" alt="" width="28" height="28" decoding="async">
         <span class="brand-name">Auren</span>
         <span class="beta-pill">Public Beta</span>
       </a>
@@ -269,7 +271,7 @@
         <a href="#how">How it works</a>
         <a href="#privacy">Privacy</a>
         <a href="#faq">FAQ</a>
-        <a href="https://github.com/yuvaang13/auren-web/releases">Releases</a>
+        <a href="https://github.com/yuvaang13/auren-web/releases" target="_blank" rel="noopener">Releases</a>
       </nav>
       <p class="copyright">© <span id="year">2026</span> Auren. Local-first security for the agent era.</p>
     </div>
