@@ -15,12 +15,12 @@ python3 -m http.server 8080
 
 ## Download buttons
 
-Both buttons currently point at the main repo's releases page:
+Both buttons link straight at release assets (click = download starts):
 
-- Mac → `https://github.com/yuvaang13/Auren-Guardrail-for-AI-agents/releases`
-- Windows → same page
+- Mac → `https://github.com/yuvaang13/auren-web/releases/download/v0.4.0-beta/auren-0.4.0-arm64.dmg`
+- Windows → `https://github.com/yuvaang13/auren-web/releases/download/v0.4.0-beta/auren-0.4.0-win-portable.zip` (portable — unzip and run `auren.exe`)
 
-Once per-OS assets are published, point each button at its direct asset URL (`.dmg` / setup `.exe`). The `data-dl="mac|win"` attributes are hooks for analytics if you add any later.
+When cutting a new version, upload the new assets to a new release and update the four `href`s in `index.html` (hero + CTA).
 
 ## Deploy (GitHub Pages)
 
