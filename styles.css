@@ -63,7 +63,7 @@ code {
 }
 
 .eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; gap: 8px; max-width: 100%;
   font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--accent); margin: 0 0 12px;
 }
@@ -101,7 +101,7 @@ code {
 .nav-links a.active { color: var(--text); }
 .nav-links a.active::after { right: 0; }
 .nav-cta { display: flex; align-items: center; gap: 12px; }
-.nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: 0; padding: 8px; cursor: pointer; }
+.nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: 0; padding: 12px 10px; cursor: pointer; min-width: 44px; min-height: 44px; justify-content: center; align-items: center; }
 .nav-burger span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
 .mobile-menu { display: none; flex-direction: column; gap: 4px; padding: 8px 28px 20px; }
 .mobile-menu.open { display: flex; }
@@ -302,8 +302,18 @@ code {
 }
 @media (max-width: 600px) {
   .card-grid, .card-grid.three { grid-template-columns: 1fr; }
+  .hero { padding: 56px 0 64px; }
+  .hero-actions { width: 100%; }
   .hero-actions .btn { width: 100%; }
   .flow-out { margin-left: 0; }
+  h1 { font-size: clamp(2.5rem, 12vw, 3.2rem); }
+  /* The mobile menu already has Download — drop the nav-bar button so the
+     brand + burger never crowd a 360px viewport. */
+  .nav-cta .btn { display: none; }
+  .cta-inner { padding: 48px 22px; }
+  .mobile-menu a:not(.btn) { padding: 12px 0; }
+  .section { padding: 64px 0; }
+  .diagram { padding: 16px; gap: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
