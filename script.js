@@ -199,6 +199,73 @@
     }
   } catch (err) { /* never break the page for a nicety */ }
 
+  // Download guidance modal: every download click first shows the
+  // OS-specific "how to open an unsigned beta build" steps. The modal's
+  // own Download button carries the real file URL.
+  var dlModal = document.getElementById("dlModal");
+  var dlTitle = document.getElementById("dlModalTitle");
+  var dlGo = document.getElementById("dlModalGo");
+  var dlStepsMac = document.getElementById("dlStepsMac");
+  var dlStepsWin = document.getElementById("dlStepsWin");
+  var dlLastFocus = null;
+
+  function dlFocusable() {
+    if (!dlModal) return [];
+    var els = dlModal.querySelectorAll("a[href], button:not([disabled])");
+    return Array.prototype.filter.call(els, function (el) {
+      return el.offsetParent !== null;
+    });
+  }
+
+  function openDlModal(os, href) {
+    if (!dlModal) return;
+    dlLastFocus = document.activeElement;
+    var isMac = os !== "win";
+    if (dlTitle) dlTitle.textContent = isMac ? "How to open Auren on Mac" : "How to open Auren on Windows";
+    if (dlStepsMac) dlStepsMac.hidden = !isMac;
+    if (dlStepsWin) dlStepsWin.hidden = isMac;
+    if (dlGo) dlGo.setAttribute("href", href);
+    dlModal.hidden = false;
+    document.body.style.overflow = "hidden";
+    var focusables = dlFocusable();
+    if (focusables.length) focusables[0].focus();
+  }
+
+  function closeDlModal() {
+    if (!dlModal || dlModal.hidden) return;
+    dlModal.hidden = true;
+    document.body.style.overflow = "";
+    if (dlLastFocus && dlLastFocus.focus) dlLastFocus.focus();
+  }
+
+  if (dlModal) {
+    document.querySelectorAll("a[data-dl]").forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        openDlModal(link.getAttribute("data-dl"), link.getAttribute("href"));
+      });
+    });
+    dlModal.querySelectorAll("[data-dl-close]").forEach(function (el) {
+      el.addEventListener("click", closeDlModal);
+    });
+    if (dlGo) dlGo.addEventListener("click", closeDlModal);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeDlModal();
+      // Keep keyboard focus inside the open dialog.
+      if (e.key === "Tab" && !dlModal.hidden) {
+        var focusables = dlFocusable();
+        if (!focusables.length) return;
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
+      }
+    });
+  }
+
   // Exposed for smoke tests — harmless in production.
   try { window.__aurenDemo = { fsVerdict: fsVerdict, cmdVerdict: cmdVerdict }; } catch (err) {}
 })();
