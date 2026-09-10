@@ -85,11 +85,11 @@
       toggle.classList.toggle("on", demoOn);
       toggle.setAttribute("aria-pressed", demoOn ? "true" : "false");
       if (statusText) statusText.textContent = demoOn
-        ? "ON — everything unreachable except what you allow"
+        ? "ON — only what you allow is reachable"
         : "OFF — everything reachable as usual";
       if (statusWrap) statusWrap.classList.toggle("off", !demoOn);
       if (demoLog) demoLog.innerHTML = demoOn
-        ? "Agent command blocked <span>(cmd_ssh)</span> · file outside mounts denied <span>(fs_denied)</span>"
+        ? "Agent command blocked <span>(cmd_ssh)</span>"
         : "Protection off — gates open, agent traffic flowing";
     });
   }
