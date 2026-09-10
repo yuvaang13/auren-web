@@ -26,7 +26,10 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: var(--font);
-  background: var(--bg);
+  background:
+    radial-gradient(1000px 420px at 12% -6%, rgba(46, 229, 160, 0.08), transparent 60%),
+    radial-gradient(900px 400px at 88% -6%, rgba(80, 140, 255, 0.07), transparent 60%),
+    var(--bg);
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -35,6 +38,16 @@ body {
 
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
 .wrap.narrow { max-width: var(--narrow); }
+/* Ambient wash behind the floating nav so the glass has color to refract
+   and the top of the page melts into the hero instead of flat black. */
+body::before {
+  content: ""; position: fixed; top: 0; left: 0; right: 0; height: 560px;
+  pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(760px 360px at 14% 0%, rgba(46, 229, 160, 0.11), transparent 65%),
+    radial-gradient(760px 360px at 86% 0%, rgba(80, 140, 255, 0.09), transparent 65%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 70%);
+}
 section[id], footer[id] { scroll-margin-top: 104px; }
 ::selection { background: rgba(46, 229, 160, 0.85); color: var(--accent-ink); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
@@ -82,13 +95,13 @@ code {
   -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
   backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03) 55%, rgba(255, 255, 255, 0.05)),
-    rgba(10, 15, 22, 0.28);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02) 55%, rgba(255, 255, 255, 0.04)),
+    rgba(10, 15, 22, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
-    0 12px 36px rgba(0, 0, 0, 0.3);
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03),
+    0 12px 36px rgba(0, 0, 0, 0.22);
   overflow: hidden;
 }
 .nav::before {
