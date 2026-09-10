@@ -184,20 +184,26 @@
   wirePlayground("cmdForm", "cmdInput", "cmdVerdict", cmdVerdict, "data-cmd");
   wirePlayground("pathForm", "pathInput", "pathVerdict", fsVerdict, "data-path");
 
+  // Detect the visitor's OS for OS-aware download affordances.
+  // Never throws — returns "mac", "win", or null.
+  function detectOS() {
+    try {
+      var p = (navigator.platform || "").toLowerCase();
+      var ua = (navigator.userAgent || "").toLowerCase();
+      if (p.indexOf("mac") !== -1 || ua.indexOf("mac") !== -1) return "mac";
+      if (p.indexOf("win") !== -1 || ua.indexOf("windows") !== -1) return "win";
+    } catch (err) { /* never break the page for a nicety */ }
+    return null;
+  }
+
   // Highlight the download button matching the visitor's OS.
   // Links still work for both — this only adds a visual recommendation.
-  try {
-    var p = (navigator.platform || "").toLowerCase();
-    var ua = (navigator.userAgent || "").toLowerCase();
-    var os = null;
-    if (p.indexOf("mac") !== -1 || ua.indexOf("mac") !== -1) os = "mac";
-    else if (p.indexOf("win") !== -1 || ua.indexOf("windows") !== -1) os = "win";
-    if (os) {
-      document.querySelectorAll('.btn-os[data-os="' + os + '"]').forEach(function (b) {
-        b.classList.add("recommended");
-      });
-    }
-  } catch (err) { /* never break the page for a nicety */ }
+  var visitorOS = detectOS();
+  if (visitorOS) {
+    document.querySelectorAll('.btn-os[data-os="' + visitorOS + '"]').forEach(function (b) {
+      b.classList.add("recommended");
+    });
+  }
 
   // Download guidance modal: every download click first shows the
   // OS-specific "how to open an unsigned beta build" steps. The modal's
@@ -243,6 +249,19 @@
       link.addEventListener("click", function (e) {
         e.preventDefault();
         openDlModal(link.getAttribute("data-dl"), link.getAttribute("href"));
+      });
+    });
+    // Nav-pill Download buttons (desktop + mobile) are plain "#download"
+    // anchors — a near-invisible jump when already at the top, so they feel
+    // dead. Open the same OS-aware guidance modal instead, resolving the
+    // real file URL from the matching hero button so links stay in sync.
+    // Without JS the href still falls back to the download options.
+    document.querySelectorAll("a[data-dl-nav]").forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        var os = detectOS() || "mac";
+        var src = document.querySelector('.btn-os[data-os="' + os + '"]');
+        openDlModal(os, src ? src.getAttribute("href") : link.getAttribute("href"));
       });
     });
     dlModal.querySelectorAll("[data-dl-close]").forEach(function (el) {
