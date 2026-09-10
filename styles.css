@@ -89,7 +89,8 @@ code {
 /* ---------- nav (floating liquid-glass pill) ---------- */
 .nav {
   position: sticky; top: 14px; z-index: 100;
-  width: min(var(--max), calc(100% - 28px));
+  width: max-content;
+  max-width: calc(100% - 28px);
   margin: 14px auto 0;
   border-radius: 22px;
   -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
@@ -107,7 +108,7 @@ code {
   content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
   background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.08) 46%, transparent 62%);
 }
-.nav-inner { display: flex; align-items: center; gap: 28px; height: 62px; }
+.nav-inner { display: flex; align-items: center; gap: 22px; height: 58px; }
 .nav .brand { margin-right: 0; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); margin-right: auto; }
 .brand-mark { width: 28px; height: 28px; border-radius: 8px; display: block; }
@@ -412,7 +413,7 @@ button.toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 
   .card-grid, .card-grid.three { grid-template-columns: repeat(2, 1fr); }
   .nav-links { display: none; }
   .nav-burger { display: flex; }
-  .nav { top: 10px; width: calc(100% - 20px); margin-top: 10px; border-radius: 20px; }
+  .nav { top: 10px; width: max-content; max-width: calc(100% - 20px); margin-top: 10px; border-radius: 20px; }
   .nav-cta { margin-left: auto; }
   .section { padding: 72px 0; }
 }
