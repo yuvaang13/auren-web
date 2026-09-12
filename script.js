@@ -39,8 +39,9 @@
     revealEls.forEach(function (el) { el.classList.add("visible"); });
   }
 
-  // Scroll progress bar (rAF-throttled)
+  // Scroll progress bar (rAF-throttled) + nav scrolled state
   var progress = document.getElementById("scrollProgress");
+  var nav = document.querySelector(".nav");
   if (progress) {
     var ticking = false;
     var update = function () {
@@ -48,6 +49,7 @@
       var max = document.documentElement.scrollHeight - window.innerHeight;
       var ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
       progress.style.transform = "scaleX(" + ratio.toFixed(4) + ")";
+      if (nav) nav.classList.toggle("scrolled", window.scrollY > 40);
     };
     window.addEventListener("scroll", function () {
       if (!ticking) { ticking = true; requestAnimationFrame(update); }
@@ -92,6 +94,30 @@
         ? "Agent command blocked <span>(cmd_ssh)</span>"
         : "Protection off — gates open, agent traffic flowing";
     });
+  }
+
+  // Rotating blocked-event feed in the hero mock — a subtle sign of life.
+  // Skipped for reduced-motion users; pauses when the tab is hidden or
+  // protection is previewed OFF (the toggle owns the log in that state).
+  var demoLines = [
+    "Agent command blocked <span>(cmd_ssh)</span>",
+    "DoH bypass killed at firewall <span>(dns_doh)</span>",
+    "Credential autofill refused <span>(autofill)</span>",
+    "Traversal escape denied <span>(fs_traversal)</span>"
+  ];
+  var demoIdx = 0;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (demoLog && !reduceMotion) {
+    setInterval(function () {
+      if (!demoOn || document.hidden) return;
+      demoLog.style.opacity = "0";
+      setTimeout(function () {
+        if (!demoOn || document.hidden) { demoLog.style.opacity = ""; return; }
+        demoIdx = (demoIdx + 1) % demoLines.length;
+        demoLog.innerHTML = demoLines[demoIdx];
+        demoLog.style.opacity = "";
+      }, 260);
+    }, 4500);
   }
 
   var FORCED = [".env", ".ssh", ".aws", ".gnupg", ".pem", ".key", "credentials", "id_rsa", "keychain"];
@@ -163,6 +189,11 @@
       var r = fn(v);
       if (r.ok === null) { out.className = "verdict"; out.textContent = r.html; return; }
       out.className = "verdict " + (r.ok ? "allow" : "deny");
+      // Restart the entrance animation even when the same verdict repeats
+      // (re-setting an identical class list won't retrigger CSS alone).
+      out.style.animation = "none";
+      void out.offsetWidth;
+      out.style.animation = "";
       out.innerHTML = "";
       var tag = document.createElement("span");
       tag.className = "tag"; tag.textContent = r.tag;
