@@ -90,9 +90,9 @@
         ? "ON — only what you allow is reachable"
         : "OFF — everything reachable as usual";
       if (statusWrap) statusWrap.classList.toggle("off", !demoOn);
-      if (demoLog) demoLog.innerHTML = demoOn
-        ? "Agent command blocked <span>(cmd_ssh)</span>"
-        : "Protection off — gates open, agent traffic flowing";
+      if (demoLog) demoLog.textContent = demoOn
+        ? "Risky agent action blocked"
+        : "Protection off";
     });
   }
 
@@ -100,10 +100,9 @@
   // Skipped for reduced-motion users; pauses when the tab is hidden or
   // protection is previewed OFF (the toggle owns the log in that state).
   var demoLines = [
-    "Agent command blocked <span>(cmd_ssh)</span>",
-    "DoH bypass killed at firewall <span>(dns_doh)</span>",
-    "Credential autofill refused <span>(autofill)</span>",
-    "Traversal escape denied <span>(fs_traversal)</span>"
+    "Risky agent action blocked",
+    "Risky connection blocked",
+    "Autofill blocked"
   ];
   var demoIdx = 0;
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
