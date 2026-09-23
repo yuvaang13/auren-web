@@ -236,8 +236,9 @@
   }
 
   // Download guidance modal: every download click first shows the
-  // OS-specific "how to open an unsigned beta build" steps. The modal's
-  // own Download button carries the real file URL.
+  // onboarding tour, which then continues to the OS-specific "how to open
+  // an unsigned beta build" steps. The guidance modal's own Download
+  // button carries the real file URL.
   var dlModal = document.getElementById("dlModal");
   var dlTitle = document.getElementById("dlModalTitle");
   var dlGo = document.getElementById("dlModalGo");
@@ -278,7 +279,7 @@
     document.querySelectorAll("a[data-dl]").forEach(function (link) {
       link.addEventListener("click", function (e) {
         e.preventDefault();
-        openDlModal(link.getAttribute("data-dl"), link.getAttribute("href"));
+        startObDownload(link.getAttribute("data-dl"), link.getAttribute("href"));
       });
     });
     // Nav-pill Download buttons (desktop + mobile) are plain "#download"
@@ -291,7 +292,7 @@
         e.preventDefault();
         var os = detectOS() || "mac";
         var src = document.querySelector('.btn-os[data-os="' + os + '"]');
-        openDlModal(os, src ? src.getAttribute("href") : link.getAttribute("href"));
+        startObDownload(os, src ? src.getAttribute("href") : link.getAttribute("href"));
       });
     });
     dlModal.querySelectorAll("[data-dl-close]").forEach(function (el) {
@@ -315,27 +316,21 @@
     });
   }
 
-  // Onboarding: quick 3-step first-visit tour. Self-contained modal, no deps.
-  // Auto-shows once (localStorage); the hero "30-second tour" button reopens it.
+  // Onboarding: quick 3-step tour shown ONLY when a download is requested.
+  // No auto-show, no separate trigger — every download click opens the tour
+  // first. Finishing or skipping continues to the download guidance modal;
+  // dismissing via X / overlay / Esc cancels without proceeding.
   var obModal = document.getElementById("onboardModal");
   var obNext = document.getElementById("obNext");
   var obBack = document.getElementById("obBack");
   var obSkip = document.getElementById("obSkip");
   var obCounter = document.getElementById("obCounter");
   var obDots = document.getElementById("obDots");
-  var tourStart = document.getElementById("tourStart");
-  var OB_KEY = "auren-onboarded-v1";
   var obStep = 0;
   var obTotal = 3;
-  var obLastFocus = null;
+  var obPending = null;
+  var obInvoker = null;
 
-  function obSeen() {
-    try { return localStorage.getItem(OB_KEY) === "1"; }
-    catch (err) { return true; } // storage blocked: don't auto-show, stay out of the way
-  }
-  function obMarkSeen() {
-    try { localStorage.setItem(OB_KEY, "1"); } catch (err) {}
-  }
   function obRender() {
     if (!obModal) return;
     obModal.querySelectorAll(".ob-step").forEach(function (s) {
@@ -347,46 +342,57 @@
     });
     if (obBack) obBack.disabled = obStep === 0;
     if (obBack) obBack.style.opacity = obStep === 0 ? "0.4" : "";
-    if (obNext) obNext.textContent = obStep === obTotal - 1 ? "Try the live demo" : "Next";
+    if (obNext) obNext.textContent = obStep === obTotal - 1 ? "Continue to download" : "Next";
   }
   function obOpen() {
     if (!obModal || !obModal.hidden) return;
-    obLastFocus = document.activeElement;
     obStep = 0;
     obRender();
     obModal.hidden = false;
     document.body.style.overflow = "hidden";
     if (obNext) obNext.focus();
   }
-  function obClose(scrollTo) {
+  // proceed=true continues to the download guidance modal with the stored
+  // OS + file URL; proceed=false cancels the whole download flow.
+  function obFinish(proceed) {
     if (!obModal || obModal.hidden) return;
-    obMarkSeen();
     obModal.hidden = true;
-    document.body.style.overflow = "";
-    if (obLastFocus && obLastFocus.focus) obLastFocus.focus();
-    if (scrollTo) {
-      var el = document.querySelector(scrollTo);
-      if (el) el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    var pending = obPending;
+    obPending = null;
+    if (proceed && pending) {
+      openDlModal(pending.os, pending.href);
+      dlLastFocus = obInvoker;
+    } else {
+      document.body.style.overflow = "";
+      if (obInvoker && obInvoker.focus) obInvoker.focus();
     }
+    obInvoker = null;
+  }
+  // Entry point for all download clicks (hoisted: safe to call from the
+  // download handlers above). Falls back to the guidance modal directly
+  // if the onboarding markup is absent.
+  function startObDownload(os, href) {
+    if (!obModal || !obNext) { openDlModal(os, href); return; }
+    obInvoker = document.activeElement;
+    obPending = { os: os, href: href };
+    obOpen();
   }
   if (obModal && obNext) {
     obRender();
-    if (tourStart) tourStart.addEventListener("click", obOpen);
     obNext.addEventListener("click", function () {
       if (obStep < obTotal - 1) { obStep++; obRender(); }
-      else obClose("#try");
+      else obFinish(true);
     });
     if (obBack) obBack.addEventListener("click", function () {
       if (obStep > 0) { obStep--; obRender(); }
     });
-    if (obSkip) obSkip.addEventListener("click", function () { obClose(null); });
+    if (obSkip) obSkip.addEventListener("click", function () { obFinish(true); });
     obModal.querySelectorAll("[data-ob-close]").forEach(function (el) {
-      el.addEventListener("click", function () { obClose(null); });
+      el.addEventListener("click", function () { obFinish(false); });
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !obModal.hidden) obClose(null);
+      if (e.key === "Escape" && !obModal.hidden) obFinish(false);
     });
-    if (!obSeen()) setTimeout(obOpen, 900);
   }
 
   // Exposed for smoke tests — harmless in production.

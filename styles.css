@@ -463,15 +463,6 @@ button.toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 
 .copyright { width: 100%; margin: 14px 0 0; color: var(--faint); font-size: 0.84rem; }
 
 /* ---------- onboarding tour ---------- */
-.tour-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  margin: 2px 0 0; padding: 6px 2px;
-  background: none; border: 0; cursor: pointer;
-  color: var(--muted); font: inherit; font-size: 0.9rem; font-weight: 600;
-  text-decoration: underline; text-underline-offset: 3px;
-  text-decoration-color: rgba(46, 229, 160, 0.45);
-}
-.tour-link:hover { color: var(--accent); }
 .ob-modal[hidden] { display: none; }
 .ob-modal {
   position: fixed; inset: 0; z-index: 300;
