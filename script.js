@@ -315,6 +315,80 @@
     });
   }
 
+  // Onboarding: quick 3-step first-visit tour. Self-contained modal, no deps.
+  // Auto-shows once (localStorage); the hero "30-second tour" button reopens it.
+  var obModal = document.getElementById("onboardModal");
+  var obNext = document.getElementById("obNext");
+  var obBack = document.getElementById("obBack");
+  var obSkip = document.getElementById("obSkip");
+  var obCounter = document.getElementById("obCounter");
+  var obDots = document.getElementById("obDots");
+  var tourStart = document.getElementById("tourStart");
+  var OB_KEY = "auren-onboarded-v1";
+  var obStep = 0;
+  var obTotal = 3;
+  var obLastFocus = null;
+
+  function obSeen() {
+    try { return localStorage.getItem(OB_KEY) === "1"; }
+    catch (err) { return true; } // storage blocked: don't auto-show, stay out of the way
+  }
+  function obMarkSeen() {
+    try { localStorage.setItem(OB_KEY, "1"); } catch (err) {}
+  }
+  function obRender() {
+    if (!obModal) return;
+    obModal.querySelectorAll(".ob-step").forEach(function (s) {
+      s.hidden = Number(s.getAttribute("data-ob-step")) !== obStep;
+    });
+    if (obCounter) obCounter.textContent = "Step " + (obStep + 1) + " of " + obTotal;
+    if (obDots) Array.prototype.forEach.call(obDots.children, function (d, i) {
+      d.classList.toggle("on", i === obStep);
+    });
+    if (obBack) obBack.disabled = obStep === 0;
+    if (obBack) obBack.style.opacity = obStep === 0 ? "0.4" : "";
+    if (obNext) obNext.textContent = obStep === obTotal - 1 ? "Try the live demo" : "Next";
+  }
+  function obOpen() {
+    if (!obModal || !obModal.hidden) return;
+    obLastFocus = document.activeElement;
+    obStep = 0;
+    obRender();
+    obModal.hidden = false;
+    document.body.style.overflow = "hidden";
+    if (obNext) obNext.focus();
+  }
+  function obClose(scrollTo) {
+    if (!obModal || obModal.hidden) return;
+    obMarkSeen();
+    obModal.hidden = true;
+    document.body.style.overflow = "";
+    if (obLastFocus && obLastFocus.focus) obLastFocus.focus();
+    if (scrollTo) {
+      var el = document.querySelector(scrollTo);
+      if (el) el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    }
+  }
+  if (obModal && obNext) {
+    obRender();
+    if (tourStart) tourStart.addEventListener("click", obOpen);
+    obNext.addEventListener("click", function () {
+      if (obStep < obTotal - 1) { obStep++; obRender(); }
+      else obClose("#try");
+    });
+    if (obBack) obBack.addEventListener("click", function () {
+      if (obStep > 0) { obStep--; obRender(); }
+    });
+    if (obSkip) obSkip.addEventListener("click", function () { obClose(null); });
+    obModal.querySelectorAll("[data-ob-close]").forEach(function (el) {
+      el.addEventListener("click", function () { obClose(null); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !obModal.hidden) obClose(null);
+    });
+    if (!obSeen()) setTimeout(obOpen, 900);
+  }
+
   // Exposed for smoke tests — harmless in production.
   try { window.__aurenDemo = { fsVerdict: fsVerdict, cmdVerdict: cmdVerdict }; } catch (err) {}
 })();

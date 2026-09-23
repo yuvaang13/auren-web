@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -70,6 +70,7 @@
               <span><strong>Download for Windows</strong></span>
             </a>
           </div>
+          <button class="tour-link" id="tourStart" type="button">New here? Take the 30-second tour <span aria-hidden="true">→</span></button>
           <ul class="trust-row" aria-label="Key properties">
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v5c0 4.5-3 7.7-7 10-4-2.3-7-5.5-7-10V6l7-3z"/></svg> Local-only</li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M7 10V7a5 5 0 0110 0v3M6 10h12v10H6z"/></svg> Biometric-gated</li>
@@ -296,6 +297,36 @@
     </section>
   </main>
 
+  <!-- ============ ONBOARDING ============ -->
+  <div class="ob-modal" id="onboardModal" role="dialog" aria-modal="true" aria-labelledby="obTitle" hidden>
+    <div class="ob-modal-overlay" data-ob-close></div>
+    <div class="ob-modal-card">
+      <button class="dl-modal-x" data-ob-close aria-label="Close onboarding">×</button>
+      <p class="ob-counter" id="obCounter">Step 1 of 3</p>
+      <section class="ob-step" data-ob-step="0">
+        <p class="eyebrow"><span class="dot"></span> Welcome to Auren</p>
+        <h3 id="obTitle">One switch between agents and your computer.</h3>
+        <p class="ob-text">Auren sits below every browser and terminal. Flip protection on, and AI agents can only touch what you allow — everything else fails closed.</p>
+      </section>
+      <section class="ob-step" data-ob-step="1" hidden>
+        <p class="eyebrow"><span class="dot"></span> Step 2 · See it bite</p>
+        <h3>Poke the gates — no install needed.</h3>
+        <p class="ob-text">Try a sketchy command or path in the live demo below and watch Auren block it. Takes 10 seconds.</p>
+      </section>
+      <section class="ob-step" data-ob-step="2" hidden>
+        <p class="eyebrow"><span class="dot"></span> Step 3 · Get protected</p>
+        <h3>Download, flip it on, done.</h3>
+        <p class="ob-text">Free during the public beta. Install, flip Protection Mode on, and you&rsquo;re guarded in about 30 seconds.</p>
+      </section>
+      <div class="ob-dots" id="obDots" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+      <div class="ob-modal-actions">
+        <button class="btn btn-ghost btn-small" id="obBack" type="button">Back</button>
+        <button class="btn btn-ghost btn-small" id="obSkip" type="button">Skip</button>
+        <button class="btn btn-primary btn-small" id="obNext" type="button">Next</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ DOWNLOAD GUIDANCE MODAL ============ -->
   <div class="dl-modal" id="dlModal" role="dialog" aria-modal="true" aria-labelledby="dlModalTitle" hidden>
     <div class="dl-modal-overlay" data-dl-close></div>
@@ -339,6 +370,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=7" defer></script>
+  <script src="script.js?v=8" defer></script>
 </body>
 </html>

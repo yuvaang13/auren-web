@@ -462,6 +462,44 @@ button.toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 
 .footer nav a:hover { color: var(--text); }
 .copyright { width: 100%; margin: 14px 0 0; color: var(--faint); font-size: 0.84rem; }
 
+/* ---------- onboarding tour ---------- */
+.tour-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin: 2px 0 0; padding: 6px 2px;
+  background: none; border: 0; cursor: pointer;
+  color: var(--muted); font: inherit; font-size: 0.9rem; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 3px;
+  text-decoration-color: rgba(46, 229, 160, 0.45);
+}
+.tour-link:hover { color: var(--accent); }
+.ob-modal[hidden] { display: none; }
+.ob-modal {
+  position: fixed; inset: 0; z-index: 300;
+  display: flex; align-items: center; justify-content: center;
+  padding: 22px;
+}
+.ob-modal-overlay {
+  position: absolute; inset: 0;
+  background: rgba(3, 6, 9, 0.66);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.ob-modal-card {
+  position: relative; width: min(520px, 100%);
+  background: linear-gradient(170deg, rgba(28, 38, 48, 0.92), rgba(11, 18, 25, 0.94));
+  -webkit-backdrop-filter: blur(20px) saturate(170%); backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgba(46, 229, 160, 0.28); border-radius: 22px;
+  padding: 30px 30px 26px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+.ob-modal-card h3 { font-size: 1.35rem; margin-bottom: 6px; }
+.ob-counter { color: var(--faint); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 12px; }
+.ob-text { color: var(--muted); font-size: 0.95rem; margin-bottom: 0; }
+.ob-dots { display: flex; gap: 8px; margin-top: 20px; }
+.ob-dots span { width: 22px; height: 5px; border-radius: 999px; background: rgba(255, 255, 255, 0.14); }
+.ob-dots span.on { background: var(--accent); }
+.ob-modal-actions { display: flex; gap: 12px; margin-top: 20px; align-items: center; }
+.ob-modal-actions #obNext { margin-left: auto; }
+
 /* ---------- download guidance modal ---------- */
 .dl-modal[hidden] { display: none; }
 .dl-modal {
