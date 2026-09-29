@@ -235,10 +235,11 @@
     });
   }
 
-  // Download guidance modal: every download click first shows the
-  // onboarding tour, which then continues to the OS-specific "how to open
-  // an unsigned beta build" steps. The guidance modal's own Download
-  // button carries the real file URL.
+  // Download guidance modal: every download click starts the file
+  // download immediately AND shows the onboarding tour on top of it, so
+  // the two happen simultaneously. The tour then continues to the
+  // OS-specific "how to open an unsigned beta build" steps. The guidance
+  // modal's own Download button carries the real file URL as a retry.
   var dlModal = document.getElementById("dlModal");
   var dlTitle = document.getElementById("dlModalTitle");
   var dlGo = document.getElementById("dlModalGo");
@@ -316,10 +317,11 @@
     });
   }
 
-  // Onboarding: quick 3-step tour shown ONLY when a download is requested.
-  // No auto-show, no separate trigger — every download click opens the tour
-  // first. Finishing or skipping continues to the download guidance modal;
-  // dismissing via X / overlay / Esc cancels without proceeding.
+  // Onboarding: quick 3-step tour shown alongside the download (the
+  // file starts downloading the moment the tour opens). No auto-show, no
+  // separate trigger — every download click opens the tour. Finishing or
+  // skipping continues to the download guidance modal; dismissing via X
+  // / overlay / Esc just closes the tour (the download keeps running).
   var obModal = document.getElementById("onboardModal");
   var obNext = document.getElementById("obNext");
   var obBack = document.getElementById("obBack");
@@ -368,10 +370,28 @@
     }
     obInvoker = null;
   }
+  // Starts the file download without navigating away. Called
+  // synchronously from the click handler so browsers treat it as a user
+  // gesture. No-ops for placeholder ("#…") hrefs.
+  function triggerDownload(href) {
+    if (!href || href.charAt(0) === "#") return;
+    if (href.indexOf("http") !== 0 && href.indexOf("/") !== 0) return;
+    try {
+      var a = document.createElement("a");
+      a.href = href;
+      a.rel = "noopener";
+      a.download = "";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (err) { /* onboarding + guidance modal still show */ }
+  }
   // Entry point for all download clicks (hoisted: safe to call from the
-  // download handlers above). Falls back to the guidance modal directly
+  // download handlers above). Starts the download immediately while the
+  // onboarding shows on top. Falls back to the guidance modal directly
   // if the onboarding markup is absent.
   function startObDownload(os, href) {
+    triggerDownload(href);
     if (!obModal || !obNext) { openDlModal(os, href); return; }
     obInvoker = document.activeElement;
     obPending = { os: os, href: href };
