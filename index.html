@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=12">
+  <link rel="stylesheet" href="styles.css?v=13">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -26,10 +26,10 @@
         <span class="brand-name">Auren</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="#try">Try it</a>
         <a href="#how">How it works</a>
         <a href="#switch">Protection Mode</a>
         <a href="#files">File Guard</a>
+        <a href="#try">Try it</a>
         <a href="#privacy">Privacy</a>
         <a href="#faq">FAQ</a>
       </nav>
@@ -41,10 +41,10 @@
       </div>
     </div>
     <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
-      <a href="#try">Try it</a>
       <a href="#how">How it works</a>
       <a href="#switch">Protection Mode</a>
       <a href="#files">File Guard</a>
+      <a href="#try">Try it</a>
       <a href="#privacy">Privacy</a>
       <a href="#faq">FAQ</a>
       <a href="#download" class="btn btn-primary btn-small" data-dl-nav>Download</a>
@@ -53,9 +53,9 @@
 
   <main id="main">
     <!-- ============ HERO ============ -->
-    <section class="hero">
+    <section class="hero hero-minimal">
       <div class="hero-glow" aria-hidden="true"></div>
-      <div class="wrap hero-grid">
+      <div class="wrap hero-centered">
         <div class="hero-copy">
           <p class="eyebrow"><span class="dot"></span> Public Beta · macOS &amp; Windows</p>
           <h1>The last-mile guardrail for <em>AI agents</em>.</h1>
@@ -75,27 +75,6 @@
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M7 10V7a5 5 0 0110 0v3M6 10h12v10H6z"/></svg> Biometric-gated</li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg> Fail-closed</li>
           </ul>
-        </div>
-        <div class="hero-visual" aria-label="Auren app preview">
-          <div class="app-window">
-            <div class="app-titlebar" aria-hidden="true"><span></span><span></span><span></span></div>
-            <div class="app-body">
-              <div class="app-row app-row-top">
-                <div>
-                  <p class="app-label">Protection Mode</p>
-                  <p class="app-status" id="demoStatus"><span class="status-dot"></span> <span id="demoStatusText">ON — only what you allow is reachable</span></p>
-                </div>
-                <button class="toggle on" id="demoToggle" aria-label="Toggle the protection preview" aria-pressed="true"><span></span></button>
-              </div>
-              <div class="app-block">
-                <p class="app-label">Blocked sites</p>
-                <ul class="chip-list">
-                  <li>chase.com</li><li>gmail.com</li><li>icloud.com</li>
-                </ul>
-              </div>
-              <p class="app-log" id="demoLog">Risky agent action blocked</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -140,12 +119,68 @@
       </div>
     </section>
 
+    <!-- ============ SWITCH ============ -->
+    <section class="section section-alt" id="switch">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Protection Mode</p>
+          <h2>One switch. Your fingerprint holds the key.</h2>
+          <p class="section-lede">Turning protection <strong>on</strong> is instant. Turning it <strong>off</strong> — or quitting — needs your fingerprint plus a 5-second cooldown. An agent can&rsquo;t quietly undo it.</p>
+          <ol class="steps">
+            <li><strong>Flip it on.</strong> First run installs the background service (one admin prompt); every later flip is instant.</li>
+            <li><strong>Work normally.</strong> Allowed sites, apps, and files behave exactly as before.</li>
+            <li><strong>Agents hit the wall.</strong> Blocked lookups fail, tunnels die, exfil pipelines get denied before they run.</li>
+          </ol>
+        </div>
+        <div class="panel reveal">
+          <h3>Auto-protect <span class="beta-pill">Beta</span></h3>
+          <p>Auren spots live agent sessions — headless browsers, automation drivers, CLI agents — and raises protection itself. It only ever raises it; lowering it is always your fingerprint.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FILE GUARD ============ -->
+    <section class="section" id="files">
+      <div class="wrap">
+        <p class="eyebrow">File System Guard</p>
+        <h2>Agents see exactly one folder. <em>Yours.</em></h2>
+        <p class="section-lede">Mount a workspace and every agent file request is checked — symlinks and <code>../</code> collapsed first, secrets always denied, everything else contained to your mounts.</p>
+        <div class="card-grid three">
+          <article class="card reveal"><h3>Default-deny mounts</h3><p>The agent starts with zero file access. Only folders you explicitly mount are visible through Auren&rsquo;s gates — stored encrypted, locally.</p></article>
+          <article class="card reveal"><h3>Forced exclusions</h3><p><code>.env</code>, <code>.ssh</code>, <code>.aws</code>, <code>*.pem / *.key</code>, browser credential stores — always denied, even inside a mount. Never removable.</p></article>
+          <article class="card reveal"><h3>Traversal-proof</h3><p>Symlink escapes and <code>workspace/../.env</code> tricks collapse to their real location first — then get denied.</p></article>
+        </div>
+        <p class="scope-note reveal"><strong>Honest scope:</strong> the guard covers agent file access routed through Auren (loopback bridge, terminal-command gate, path checks). It doesn&rsquo;t lock Finder / File Explorer for you — you stay trusted; the agent stays leashed.</p>
+      </div>
+    </section>
+
     <!-- ============ TRY IT ============ -->
     <section class="section section-alt" id="try">
       <div class="wrap">
         <p class="eyebrow">Try it live</p>
         <h2>Poke the gates. <em>They bite.</em></h2>
-        <p class="section-lede">A simulated preview of Auren&rsquo;s real decisions. Type a command or a path — watch what gets through.</p>
+        <p class="section-lede">A simulated preview of Auren&rsquo;s real decisions. Flip the switch, then type a command or a path — watch what gets through.</p>
+        <div class="try-preview" aria-label="Auren app preview">
+          <div class="app-window">
+            <div class="app-titlebar" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="app-body">
+              <div class="app-row app-row-top">
+                <div>
+                  <p class="app-label">Protection Mode</p>
+                  <p class="app-status" id="demoStatus"><span class="status-dot"></span> <span id="demoStatusText">ON — only what you allow is reachable</span></p>
+                </div>
+                <button class="toggle on" id="demoToggle" aria-label="Toggle the protection preview" aria-pressed="true"><span></span></button>
+              </div>
+              <div class="app-block">
+                <p class="app-label">Blocked sites</p>
+                <ul class="chip-list">
+                  <li>chase.com</li><li>gmail.com</li><li>icloud.com</li>
+                </ul>
+              </div>
+              <p class="app-log" id="demoLog">Risky agent action blocked</p>
+            </div>
+          </div>
+        </div>
         <div class="play-grid">
           <article class="play-card reveal">
             <div class="play-head"><span class="play-dot r"></span><span class="play-dot y"></span><span class="play-dot g"></span><span class="play-title">agent — command gate</span></div>
@@ -179,41 +214,6 @@
           </article>
         </div>
         <p class="fineprint" style="margin-top:14px">Simulated in your browser for the demo — the real gates run locally in the app with full canonicalization.</p>
-      </div>
-    </section>
-
-    <!-- ============ SWITCH ============ -->
-    <section class="section section-alt" id="switch">
-      <div class="wrap split">
-        <div>
-          <p class="eyebrow">Protection Mode</p>
-          <h2>One switch. Your fingerprint holds the key.</h2>
-          <p class="section-lede">Turning protection <strong>on</strong> is instant. Turning it <strong>off</strong> — or quitting — needs your fingerprint plus a 5-second cooldown. An agent can&rsquo;t quietly undo it.</p>
-          <ol class="steps">
-            <li><strong>Flip it on.</strong> First run installs the background service (one admin prompt); every later flip is instant.</li>
-            <li><strong>Work normally.</strong> Allowed sites, apps, and files behave exactly as before.</li>
-            <li><strong>Agents hit the wall.</strong> Blocked lookups fail, tunnels die, exfil pipelines get denied before they run.</li>
-          </ol>
-        </div>
-        <div class="panel reveal">
-          <h3>Auto-protect <span class="beta-pill">Beta</span></h3>
-          <p>Auren spots live agent sessions — headless browsers, automation drivers, CLI agents — and raises protection itself. It only ever raises it; lowering it is always your fingerprint.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ FILE GUARD ============ -->
-    <section class="section" id="files">
-      <div class="wrap">
-        <p class="eyebrow">File System Guard</p>
-        <h2>Agents see exactly one folder. <em>Yours.</em></h2>
-        <p class="section-lede">Mount a workspace and every agent file request is checked — symlinks and <code>../</code> collapsed first, secrets always denied, everything else contained to your mounts.</p>
-        <div class="card-grid three">
-          <article class="card reveal"><h3>Default-deny mounts</h3><p>The agent starts with zero file access. Only folders you explicitly mount are visible through Auren&rsquo;s gates — stored encrypted, locally.</p></article>
-          <article class="card reveal"><h3>Forced exclusions</h3><p><code>.env</code>, <code>.ssh</code>, <code>.aws</code>, <code>*.pem / *.key</code>, browser credential stores — always denied, even inside a mount. Never removable.</p></article>
-          <article class="card reveal"><h3>Traversal-proof</h3><p>Symlink escapes and <code>workspace/../.env</code> tricks collapse to their real location first — then get denied.</p></article>
-        </div>
-        <p class="scope-note reveal"><strong>Honest scope:</strong> the guard covers agent file access routed through Auren (loopback bridge, terminal-command gate, path checks). It doesn&rsquo;t lock Finder / File Explorer for you — you stay trusted; the agent stays leashed.</p>
       </div>
     </section>
 
