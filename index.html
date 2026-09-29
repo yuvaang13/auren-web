@@ -29,6 +29,7 @@
         <a href="#how">How it works</a>
         <a href="#switch">Protection Mode</a>
         <a href="#files">File Guard</a>
+        <a href="#detection">Agent Detection</a>
         <a href="#try">Try it</a>
         <a href="#privacy">Privacy</a>
         <a href="#faq">FAQ</a>
@@ -44,6 +45,7 @@
       <a href="#how">How it works</a>
       <a href="#switch">Protection Mode</a>
       <a href="#files">File Guard</a>
+      <a href="#detection">Agent Detection</a>
       <a href="#try">Try it</a>
       <a href="#privacy">Privacy</a>
       <a href="#faq">FAQ</a>
@@ -151,6 +153,21 @@
           <article class="card reveal"><h3>Traversal-proof</h3><p>Symlink escapes and <code>workspace/../.env</code> tricks collapse to their real location first — then get denied.</p></article>
         </div>
         <p class="scope-note reveal"><strong>Honest scope:</strong> the guard covers agent file access routed through Auren (loopback bridge, terminal-command gate, path checks). It doesn&rsquo;t lock Finder / File Explorer for you — you stay trusted; the agent stays leashed.</p>
+      </div>
+    </section>
+
+    <!-- ============ AGENT DETECTION ============ -->
+    <section class="section section-alt" id="detection">
+      <div class="wrap">
+        <p class="eyebrow">Agent Detection</p>
+        <h2>Know when software is <em>driving your computer.</em></h2>
+        <p class="section-lede">A fully local, deterministic detector watches for evidence of automated control — known agent processes, accessibility/automation API use, programmatic input, and repeated automation patterns — and scores it transparently. No cloud, no ML model, no screen recording, no keystroke logging. Metadata only, always offline.</p>
+        <div class="card-grid three">
+          <article class="card reveal"><h3>Evidence, not black boxes</h3><p>Every detection lists its reasons — &ldquo;known agent process&rdquo;, &ldquo;accessibility automation observed&rdquo;, &ldquo;programmatic input&rdquo; — with a score that decays over time. A score of 80 means the evidence crossed a threshold you can inspect, not a probability.</p></article>
+          <article class="card reveal"><h3>Detection advises, policy decides</h3><p>Detections map to <code>ALLOW</code>, <code>WARN</code>, <code>REQUIRE_APPROVAL</code>, or <code>BLOCK</code>. An agent plus a sensitive operation asks for your approval first — unknown automation at low confidence is simply allowed.</p></article>
+          <article class="card reveal"><h3>Private by construction</h3><p>No typed text, passwords, clipboard, screenshots, or document contents are ever captured — only timestamps, event types, and process metadata in ephemeral memory. Debug logging is metadata-only and off by default.</p></article>
+        </div>
+        <p class="scope-note reveal"><strong>Honest scope:</strong> the detector answers &ldquo;is there sufficient local evidence of automated control?&rdquo; — it never claims which AI model is behind it, what it intends, or that a process name alone proves anything.</p>
       </div>
     </section>
 
