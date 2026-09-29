@@ -17,7 +17,7 @@ python3 -m http.server 8080
 
 Both buttons link straight at release assets (click = download starts):
 
-- Mac → `https://github.com/yuvaang13/auren-web/releases/download/v0.4.0-beta/auren-0.4.0-arm64.dmg`
+- Mac → `https://github.com/yuvaang13/auren-web/releases/download/v0.5.0-beta/auren-0.5.0-arm64.dmg`
 - Windows → `https://github.com/yuvaang13/auren-web/releases/download/v0.4.0-beta/auren-0.4.0-win-portable.zip` (portable — unzip and run `auren.exe`)
 
 When cutting a new version, upload the new assets to a new release and update the four `href`s in `index.html` (hero + CTA).
